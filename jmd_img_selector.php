@@ -356,13 +356,16 @@ jmdImgSel.createModal = function(contents)
 jmdImgSel.positionModal = function()
 {
     var modal = document.getElementById(jmdImgSel.config.modalId);
-    var left = (document.body.clientWidth - jmdImgSel.config.windowWidth)/2;
-    modal.setAttribute('style',
-        'width: ' + jmdImgSel.config.windowWidth + 'px;' +
-        'height: ' + jmdImgSel.config.windowHeight + 'px;' +
-        'left: ' + left + 'px;'
-    );
-    
+    if (modal)
+    {
+        var left = (document.body.clientWidth - jmdImgSel.config.windowWidth)/2;
+        modal.setAttribute('style',
+            'width: ' + jmdImgSel.config.windowWidth + 'px;' +
+            'height: ' + jmdImgSel.config.windowHeight + 'px;' +
+            'left: ' + left + 'px;'
+        );
+    }
+
     var imgContainer = document.getElementById(jmdImgSel.config.ulId);
     if (imgContainer)
     {
