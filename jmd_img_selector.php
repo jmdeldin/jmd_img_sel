@@ -345,22 +345,35 @@ jmdImgSel.createModal = function(contents)
 
     var modal = document.createElement('div');
     modal.setAttribute('id', jmdImgSel.config.modalId);
+    modal.innerHTML = contents;
+    document.body.appendChild(modal);
+    jmdImgSel.positionModal();
+};
+
+/**
+ * Positions the modal window.
+*/
+jmdImgSel.positionModal = function()
+{
+    var modal = document.getElementById(jmdImgSel.config.modalId);
     var left = (document.body.clientWidth - jmdImgSel.config.windowWidth)/2;
     modal.setAttribute('style',
         'width: ' + jmdImgSel.config.windowWidth + 'px;' +
         'height: ' + jmdImgSel.config.windowHeight + 'px;' +
         'left: ' + left + 'px;'
     );
-    modal.innerHTML = contents;
-    document.body.appendChild(modal);
-    // TODO: This needs to be abstracted for window.onresize too
+    
     var imgContainer = document.getElementById(jmdImgSel.config.ulId);
-    var controls = document.getElementById(jmdImgSel.config.controlsId);
-    var cc = document.defaultView.getComputedStyle(controls, '');
-    var controlHeight = (parseInt(controls.clientHeight) + parseInt(cc.getPropertyValue('padding-top')) + parseInt(cc.getPropertyValue('padding-bottom')));
-    var ht = (jmdImgSel.config.windowHeight - controlHeight);
-    imgContainer.style.height = ht + 'px';
+    if (imgContainer)
+    {
+        var controls = document.getElementById(jmdImgSel.config.controlsId);
+        var cc = document.defaultView.getComputedStyle(controls, '');
+        var controlHeight = (parseInt(controls.clientHeight) + parseInt(cc.getPropertyValue('padding-top')) + parseInt(cc.getPropertyValue('padding-bottom')));
+        var ht = (jmdImgSel.config.windowHeight - controlHeight);
+        imgContainer.style.height = ht + 'px';
+    }
 };
+jmdImgSel.addEvent(window, 'resize', function(){jmdImgSel.positionModal();});
 
 /**
  * Toggles the modal window's visibility.
@@ -482,7 +495,7 @@ jmdImgSel.toggleName = function(name)
     {
         if (name)
         {
-            nameId.innerHTML = name;
+            nameId.innerHTML = '&nbsp;' + name;
         }
         else
         {
@@ -795,4 +808,3 @@ IMG;
 # --- END PLUGIN CODE ---
 
 ?>
-
