@@ -359,11 +359,9 @@ jmdImgSel.positionModal = function()
     if (modal)
     {
         var left = (document.body.clientWidth - jmdImgSel.config.windowWidth)/2;
-        modal.setAttribute('style',
-            'width: ' + jmdImgSel.config.windowWidth + 'px;' +
-            'height: ' + jmdImgSel.config.windowHeight + 'px;' +
-            'left: ' + left + 'px;'
-        );
+        modal.style.width = jmdImgSel.config.windowWidth + 'px';
+        modal.style.height = jmdImgSel.config.windowHeight + 'px';
+        modal.style.left = left + 'px';
     }
 
     var imgContainer = document.getElementById(jmdImgSel.config.ulId);
