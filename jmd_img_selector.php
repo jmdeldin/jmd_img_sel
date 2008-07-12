@@ -92,6 +92,7 @@ function jmd_img_selector($event, $step)
     height: 100%;
     left: 0;
     opacity: 0.8;
+    /*TODO: switch to abs and do pos() w/js - faster for firefox*/
     position: fixed;
     top: 0;
     width: 100%;
@@ -164,30 +165,28 @@ function jmd_img_selector($event, $step)
 
 #jmdImgSel_images
 {
-    clear: both;
-    margin: 8px 0 0 10px;
     overflow: auto;
 }
-    #jmdImgSel_images li
+    #jmdImgSel_images li { display: inline ;}
+    #jmdImgSel_images img
     {
         border: 5px solid #ccc;
-        float: left;
         margin: 0 5px 10px 0;
         opacity: 0.6;
     }
-        #jmdImgSel_images li:hover
+        #jmdImgSel_images img:hover
         {
             border-color: #999;
             opacity: 1;
         }
-        #jmdImgSel_images li.selected
+        #jmdImgSel_images li.selected img
         {
             border-color: #666;
             opacity: 1;
         }
     #jmdImgSel_images img
     {
-        display: block;
+        float: left;
     }
 CSS;
         safe_insert("txp_css", "name='jmd_img_selector', css='" . base64_encode($css) . "'");
@@ -453,6 +452,7 @@ jmdImgSel.createModal = function(contents)
     );
     modal.innerHTML = contents;
     document.body.appendChild(modal);
+    // TODO: This needs to be abstracted for window.onresize too
     var imgContainer = document.getElementById(jmdImgSel.config.ulId);
     var controls = document.getElementById(jmdImgSel.config.controlsId);
     var cc = document.defaultView.getComputedStyle(controls, '');
