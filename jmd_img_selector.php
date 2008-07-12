@@ -25,12 +25,12 @@ See Extensions>jmd_img_selector for preferences.
 if (txpinterface === 'admin')
 {
     global $event, $jmdImgSel, $prefs;
-	$privs = '1,2,3,4,5';
+    $privs = '1,2,3,4,5';
     add_privs('jmd_img_selector', $privs);
     register_tab('extensions', 'jmd_img_selector', 'jmd_img_selector');
     register_callback('jmd_img_selector', 'jmd_img_selector');
-	add_privs('jmd_img_selector_js', $privs);
-	register_callback('jmd_img_selector_js', 'jmd_img_selector_js');
+    add_privs('jmd_img_selector_js', $privs);
+    register_callback('jmd_img_selector_js', 'jmd_img_selector_js');
     add_privs('jmd_img_selector_thickbox', $privs);
     register_callback('jmd_img_selector_thickbox', 'jmd_img_selector_thickbox');
     $view = gps('view');
@@ -250,10 +250,10 @@ EOD;
  */
 function jmd_img_selector_js($event, $step)
 {
-	global $jmdImgSel, $prefs;
-	header('content-type: text/javascript; charset=utf-8');
+    global $jmdImgSel, $prefs;
+    header('content-type: text/javascript; charset=utf-8');
 
-	echo <<<EOD
+    echo <<<EOD
 var jmdImgSel = {
     config: {
         'addImgId': 'jmdImgSel_add',
@@ -658,7 +658,7 @@ jmdImgSel.addImg = function()
 
 jmdImgSel.addEvent(window, 'load', jmdImgSel.insertLink);
 EOD;
-	exit;
+    exit;
 }
 
 /**
