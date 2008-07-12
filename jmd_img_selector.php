@@ -1,6 +1,6 @@
 <?php
 $plugin = array(
-    'version' => '0.2.1',
+    'version' => '0.2.2',
     'author' => 'Jon-Michael Deldin',
     'author_uri' => 'http://jmdeldin.com',
     'description' => 'Thickbox-style image selector.',
@@ -24,7 +24,7 @@ See Extensions>jmd_img_selector for preferences.
 
 if (txpinterface === 'admin')
 {
-    global $event, $prefs, $jmdImgSel;
+    global $event, $jmdImgSel, $prefs;
 	$privs = '1,2,3,4,5';
     add_privs('jmd_img_selector', $privs);
     register_tab('extensions', 'jmd_img_selector', 'jmd_img_selector');
@@ -33,8 +33,8 @@ if (txpinterface === 'admin')
 	register_callback('jmd_img_selector_js', 'jmd_img_selector_js');
     add_privs('jmd_img_selector_thickbox', $privs);
     register_callback('jmd_img_selector_thickbox', 'jmd_img_selector_thickbox');
-
-    if ($event === 'article')
+    $view = gps('view');
+    if ($event === 'article' && $view !== 'preview' && $view !== 'html')
     {
         ob_start('jmd_img_selector_head');
     }
