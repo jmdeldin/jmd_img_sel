@@ -1,6 +1,6 @@
 <?php
 $plugin = array(
-    'version' => '0.2',
+    'version' => '0.2.1',
     'author' => 'Jon-Michael Deldin',
     'author_uri' => 'http://jmdeldin.com',
     'description' => 'Thickbox-style image selector.',
@@ -122,17 +122,29 @@ function jmd_img_selector($event, $step)
         padding: 2px 5px;
     }
 
+#jmdImgSel_close
+{
+    background: rgba(0, 0, 0, 0.8);
+    text-align: right;
+}
+    #jmdImgSel_close a
+    {
+        background: #eee;
+        padding: 2px 5px;
+    }
+    
 #jmdImgSel_controls
 {
+    background: #eee;
     padding: 10px 0;
 }
-#jmdImgSel_controls:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
+    #jmdImgSel_controls:after {
+        clear: both;
+        content: '.';
+        display: block;
+        height: 0;
+        visibility: hidden;
+    }
     #jmdImgSel_controls label
     {
         float: left;
@@ -143,11 +155,17 @@ function jmd_img_selector($event, $step)
         float: right;
         margin: 0 10px 0 0;
     }
+    #jmdImgSel_img_name
+    {
+/*        clear: both;*/
+        font-weight: 900;
+/*        padding: 0 10px;*/
+    }
 
 #jmdImgSel_images
 {
     clear: both;
-    margin: 0 0 0 10px;
+    margin: 8px 0 0 10px;
     overflow: auto;
 }
     #jmdImgSel_images li
@@ -157,6 +175,11 @@ function jmd_img_selector($event, $step)
         margin: 0 5px 10px 0;
         opacity: 0.6;
     }
+        #jmdImgSel_images li:hover
+        {
+            border-color: #999;
+            opacity: 1;
+        }
         #jmdImgSel_images li.selected
         {
             border-color: #666;
@@ -562,7 +585,7 @@ jmdImgSel.toggleName = function(name)
         }
         else
         {
-            nameId.innerHTML = '';
+            nameId.innerHTML = '&nbsp;';
         }
     }
 };
@@ -649,19 +672,26 @@ function jmd_img_selector_thickbox($event, $step)
     $lang = LANG;
     $dir = gTxt('lang_dir');
     echo <<<HTML
+<div id="jmdImgSel_close">
+    <a href="#jmdImgSel" onclick="jmdImgSel.toggleModal();">
+        {$jmdImgSel->gTxt('close_window')}
+    </a>
+</div>
 <div id="jmdImgSel_controls">
     <label>{$jmdImgSel->gTxt('browse')}
         <select id="jmdImgSel_categories">
             <option value="root">root</option>
             {$jmdImgSel->displayCategories()}
-        </select>
-        <span id="jmdImgSel_img_name"></span>
-        
+        </select>    
     </label>
     <button id="jmdImgSel_add" type="button">
         {$jmdImgSel->gTxt('add_img')}
     </button>
+    <div id="jmdImgSel_img_name">
+        &nbsp;
+    </div>
 </div>
+
 <ul id="jmdImgSel_images">
     {$jmdImgSel->displayImages()}
 </ul>
@@ -780,7 +810,7 @@ IMG;
             'add_img' => 'Add image',
             'browse' => 'Browse category:',
             'create_css' => 'Create CSS',
-            'close_window' => 'Close image selector',
+            'close_window' => 'Close',
             'css_created' => 'CSS created.',
             'css_legend' => 'Create jmd_img_selector CSS',
             'img_legend' => 'Image settings',
