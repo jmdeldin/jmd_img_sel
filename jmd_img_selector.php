@@ -1,6 +1,6 @@
 <?php
 $plugin = array(
-    'version' => '0.3.2',
+    'version' => '0.3.3',
     'author' => 'Jon-Michael Deldin',
     'author_uri' => 'http://jmdeldin.com',
     'description' => 'Thickbox-style image selector.',
@@ -729,7 +729,6 @@ class JMD_ImgSelector
         if (gps('event') === 'jmd_img_selector_thickbox')
         {
             $this->categories = array();
-            $this->images = array();
             $this->height = $prefs[$this->prefix('imgHeight')];
             $this->width = $prefs[$this->prefix('imgWidth')];
             $this->getImages();
@@ -818,11 +817,11 @@ IMG;
      */
     private function getImages()
     {
-        $images = getRows("select id, name, category, ext, w, h, thumbnail
+        $this->images = getRows("select id, name, category, ext, w, h, thumbnail
             from " . safe_pfx('txp_image'));
-        if ($images)
+        if ($this->images)
         {
-            foreach ($images as $img)
+            foreach ($this->images as $img)
             {
                 if (!in_array($img['category'], $this->categories)
                     && $img['category'] !== '')
