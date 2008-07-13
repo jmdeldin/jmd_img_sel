@@ -763,7 +763,8 @@ class JMD_ImgSelector
             if ($thumbnail == 1)
             {
                 $uri .= 't';
-                list($w, $h, $type, $attr) = getimagesize($uri . $ext);
+                $path = dirname(txpath) . DS . $img_dir . DS . $id . 't' . $ext;
+                list($w, $h, $type, $attr) = getimagesize($path);
             }
             $uri .= $ext;
             // Landscape
