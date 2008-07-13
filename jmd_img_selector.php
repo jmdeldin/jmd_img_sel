@@ -1,6 +1,6 @@
 <?php
 $plugin = array(
-    'version' => '0.2.2',
+    'version' => '0.3.2',
     'author' => 'Jon-Michael Deldin',
     'author_uri' => 'http://jmdeldin.com',
     'description' => 'Thickbox-style image selector.',
@@ -762,9 +762,13 @@ class JMD_ImgSelector
             $uri = hu . $img_dir . DS . $id;
             if ($thumbnail == 1)
             {
-                $uri .= 't';
                 $path = dirname(txpath) . DS . $img_dir . DS . $id . 't' . $ext;
-                list($w, $h, $type, $attr) = getimagesize($path);
+                // in case the thumbnail was deleted from the filesystem
+                if (file_exists($path))
+                {
+                    $uri .= 't';
+                    list($w, $h, $type, $attr) = getimagesize($path);
+                }
             }
             $uri .= $ext;
             // Landscape
