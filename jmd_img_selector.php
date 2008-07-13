@@ -86,7 +86,111 @@ function jmd_img_selector($event, $step)
     if ($step === 'css')
     {
         $css = <<<CSS
+#jmdImgSel_overlay
+{
+    background: #000;
+    height: 100%;
+    left: 0;
+    opacity: 0.8;
+    /*TODO: switch to abs and do pos() w/js - faster for firefox*/
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
 
+#jmdImgSel_modal, #jmdImgSel_modal *
+{
+    margin: 0;
+    padding: 0;
+}
+    #jmdImgSel_modal
+    {
+        background: #fff;
+        color: #333;
+        position: absolute;
+        top: 25px;
+        z-index: 2;
+    }
+
+#jmdImgSel_msg
+{
+    position: absolute;
+    top: -20px;
+}
+    #jmdImgSel_msg p
+    {
+        padding: 2px 5px;
+    }
+
+#jmdImgSel_close
+{
+    background: rgba(0, 0, 0, 0.8);
+    text-align: right;
+}
+    #jmdImgSel_close a
+    {
+        background: #eee;
+        padding: 2px 5px;
+    }
+
+#jmdImgSel_controls
+{
+    background: #eee;
+    padding: 10px 0;
+}
+    #jmdImgSel_controls:after {
+        clear: both;
+        content: '.';
+        display: block;
+        height: 0;
+        visibility: hidden;
+    }
+    #jmdImgSel_controls label
+    {
+        float: left;
+        margin: 0 0 0 10px;
+    }
+    #jmdImgSel_controls button
+    {
+        float: right;
+        margin: 0 10px 0 0;
+    }
+    #jmdImgSel_img_name
+    {
+/*        clear: both;*/
+        font-weight: 900;
+/*        padding: 0 10px;*/
+    }
+
+#jmdImgSel_images
+{
+    overflow: auto;
+}
+    #jmdImgSel_images li
+    {
+        border: 5px solid #ccc;
+        float: left;
+        margin: 0 5px 10px 0;
+        opacity: 0.6;
+        overflow: hidden;
+        position: relative;
+    }
+        #jmdImgSel_images li:hover
+        {
+            border-color: #999;
+            opacity: 1;
+        }
+        #jmdImgSel_images li.selected
+        {
+            border-color: #666;
+            opacity: 1;
+        }
+    #jmdImgSel_images img
+    {
+        position: absolute;
+        top: 0;
+    }
 CSS;
         safe_insert("txp_css", "name='jmd_img_selector', css='" . base64_encode($css) . "'");
         $msg = $jmdImgSel->gTxt('css_created');
