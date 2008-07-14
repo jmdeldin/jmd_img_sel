@@ -1,6 +1,6 @@
 <?php
 $plugin = array(
-    'version' => '0.3.3',
+    'version' => '0.3.4',
     'author' => 'Jon-Michael Deldin',
     'author_uri' => 'http://jmdeldin.com',
     'description' => 'Thickbox-style image selector.',
@@ -827,10 +827,6 @@ IMG;
                     && $img['category'] !== '')
                 {
                     array_push($this->categories, $img['category']);
-                }
-                if (!in_array($img['id'], $this->images))
-                {
-                    array_push($this->images, $img);
                 }
             }
         }
