@@ -285,6 +285,7 @@ jmdImgSel.selected = [];
 
 /**
  * Cross-browser addEventListener
+ *
  * @param object obj
  * @param string event
  * @param function func
@@ -293,11 +294,16 @@ jmdImgSel.addEvent = function(obj, event, func)
 {
     if (obj.attachEvent)
     {
-        obj.attachEvent('on' + event, func);
+        obj['e' + event + func] = func;
+        obj[event + func] = function()
+        {
+            obj['e' + event + func](window.event);
+        };
+        obj.attachEvent('on' + event, obj[event + func]);
     }
     else
     {
-        obj.addEventListener(event, func, false);
+        obj.addEventListener(event, func, false)
     }
 };
 
@@ -352,7 +358,7 @@ jmdImgSel.getStyle = function(el, attr)
         // IE
         val = el.currentStyle[attr];
     }
-    
+
     return val;
 };
 
@@ -495,7 +501,7 @@ jmdImgSel.positionModal = function()
     if (imgContainer)
     {
         var controls = document.getElementById(jmdImgSel.config.controlsId);
-        var controlHeight = parseInt(controls.clientHeight) + 
+        var controlHeight = parseInt(controls.clientHeight) +
             parseInt(jmdImgSel.getStyle(controls, 'paddingTop')) +
             parseInt(jmdImgSel.getStyle(controls, 'paddingBottom'));
         var ht = (jmdImgSel.config.windowHeight - controlHeight);
@@ -593,6 +599,7 @@ jmdImgSel.sortImg = function(val)
 /**
  * Appends or removes the selected class
  * Pushes selected images onto jmdImgSel.selected
+ *
  * @param string el #images li[i]
  */
 jmdImgSel.selectImg = function(el)
