@@ -334,6 +334,29 @@ jmdImgSel.unkSplice = function(haystack, needle)
 };
 
 /**
+ * Returns an element's CSS value.
+ *
+ * @param string el
+ * @param string attr
+ */
+jmdImgSel.getStyle = function(el, attr)
+{
+    var val;
+    if (document.defaultView && document.defaultView.getComputedStyle)
+    {
+        var el = document.defaultView.getComputedStyle(el, '');
+        val = el.getPropertyValue(attr);
+    }
+    else
+    {
+        // IE
+        val = el.currentStyle[attr];
+    }
+    
+    return val;
+};
+
+/**
  * Toggles an element's visibility.
  * @param obj el
  */
@@ -472,8 +495,9 @@ jmdImgSel.positionModal = function()
     if (imgContainer)
     {
         var controls = document.getElementById(jmdImgSel.config.controlsId);
-        var cc = document.defaultView.getComputedStyle(controls, '');
-        var controlHeight = (parseInt(controls.clientHeight) + parseInt(cc.getPropertyValue('padding-top')) + parseInt(cc.getPropertyValue('padding-bottom')));
+        var controlHeight = parseInt(controls.clientHeight) + 
+            parseInt(jmdImgSel.getStyle(controls, 'paddingTop')) +
+            parseInt(jmdImgSel.getStyle(controls, 'paddingBottom'));
         var ht = (jmdImgSel.config.windowHeight - controlHeight);
         imgContainer.style.height = ht + 'px';
     }
