@@ -264,6 +264,7 @@ var jmdImgSel = {
         'addImgId': 'jmdImgSel_add',
         'articleImgField': 'article-image',
         'controlsId': 'jmdImgSel_controls',
+        'closeId': 'jmdImgSel_close',
         'closeText': '{$jmdImgSel->gTxt('close_window')}',
         'contentId': 'jmdImgSel_content',
         'linkName': '{$jmdImgSel->gTxt('link_name')}',
@@ -532,6 +533,13 @@ jmdImgSel.toggleModal = function()
  */
 jmdImgSel.init = function()
 {
+    // Close button
+    var close = document.getElementById(jmdImgSel.config.closeId);
+    if (close)
+    {
+        jmdImgSel.addEvent(close, 'click', jmdImgSel.toggleModal);
+    }
+
     // Select handler
     var select = document.getElementById(jmdImgSel.config.selectId);
     if (select)
@@ -728,7 +736,7 @@ function jmd_img_selector_thickbox($event, $step)
     $dir = gTxt('lang_dir');
     echo <<<HTML
 <div id="jmdImgSel_close">
-    <a href="#jmdImgSel" onclick="jmdImgSel.toggleModal();">
+    <a href="#jmdImgSel">
         {$jmdImgSel->gTxt('close_window')}
     </a>
 </div>
