@@ -42,11 +42,11 @@ if (txpinterface === 'admin')
     $jmdImgSel = new JMD_ImgSelector;
     if (empty($prefs[$jmdImgSel->prefix('tbWidth')]))
     {
-        $jmdImgSel->upsertPref('tbWidth', 500, 1);
+        $jmdImgSel->upsertPref('tbWidth', 600, 1);
     }
     if (empty($prefs[$jmdImgSel->prefix('tbHeight')]))
     {
-        $jmdImgSel->upsertPref('tbHeight', 500, 1);
+        $jmdImgSel->upsertPref('tbHeight', 600, 1);
     }
     if (empty($prefs[$jmdImgSel->prefix('imgWidth')]))
     {
@@ -189,7 +189,7 @@ function jmd_img_selector($event, $step)
 {
     clear: both;
     overflow: auto;
-    padding: 0 10px;
+    padding: 0 0 0 10px;
 }
     #jmdImgSel_images li
     {
@@ -301,6 +301,7 @@ var jmdImgSel = {
     config: {
         'addImgId': 'jmdImgSel_add',
         'articleImgField': 'article-image',
+        'bodyField': 'body',
         'controlsId': 'jmdImgSel_controls',
         'closeId': 'jmdImgSel_close',
         'closeText': '{$jmdImgSel->gTxt('close_window')}',
@@ -311,6 +312,7 @@ var jmdImgSel = {
         'overlayId': 'jmdImgSel_overlay',
         'modalId': 'jmdImgSel_modal',
         'selectId': 'jmdImgSel_categories',
+        'typeId': 'jmdImgSel_type',
         'ulId': 'jmdImgSel_images',
         'updateId': 'jmdImgSel_msg',
         'updateMsg': '{$jmdImgSel->gTxt('update_msg')}',
@@ -736,28 +738,61 @@ jmdImgSel.fadeUp = function(el, red, green, blue)
 };
 
 /**
+ * Create TXP tags for each selected image.
+ *
+ * @param string tagName
+ * @param string attr attributes in the form of 'attr="val"'
+ */
+jmdImgSel.bodyImg = function(tagName, attr)
+{
+    var out = '';
+    for (var i = 0; i < jmdImgSel.selected.length; i++)
+    {
+        out += '<txp:' + tagName + ' id="' + jmdImgSel.selected[i] + '"' + attr + '/>';
+    }
+    
+    return out;
+}
+
+/**
  * Update the parent window field
  */
 jmdImgSel.addImg = function()
 {
-    var field = document.getElementById(jmdImgSel.config.articleImgField);
-    if (field)
+    var field, out;
+    var type = document.getElementById(jmdImgSel.config.typeId);
+    field = document.getElementById(jmdImgSel.config.bodyField);
+    switch (type.value)
     {
-        var msg = document.getElementById(jmdImgSel.config.updateId);
-        if (!msg)
-        {
-            msg = document.createElement('span');
-            msg.id = jmdImgSel.config.updateId;
-            msg.appendChild(
-                document.createTextNode(jmdImgSel.config.updateMsg)
-            );
-            var info = document.getElementById(jmdImgSel.config.infoId);
-            info.insertBefore(msg, info.firstChild);
-        }
-        jmdImgSel.fadeUp(msg, 255, 255, 153);
-
-        return field.value = jmdImgSel.selected.join();
+        case 'article_image':
+            field = document.getElementById(jmdImgSel.config.articleImgField);
+            out = jmdImgSel.selected.join();
+            break;
+        case 'body':
+            out = field.value + jmdImgSel.bodyImg('image', '');
+            break;
+        case 'thumbnail':
+            out = field.value + jmdImgSel.bodyImg('thumbnail', '');
+            break;
+        case 'popup':
+            out = field.value + jmdImgSel.bodyImg('thumbnail', ' poplink="1"');
+            break;
+        default:
     }
+    var msg = document.getElementById(jmdImgSel.config.updateId);
+    if (!msg)
+    {
+        msg = document.createElement('span');
+        msg.id = jmdImgSel.config.updateId;
+        msg.appendChild(
+            document.createTextNode(jmdImgSel.config.updateMsg)
+        );
+        var info = document.getElementById(jmdImgSel.config.infoId);
+        info.insertBefore(msg, info.firstChild);
+    }
+    jmdImgSel.fadeUp(msg, 255, 255, 153);
+    
+    return field.value = out;
 };
 
 jmdImgSel.addEvent(window, 'load', jmdImgSel.insertLink);
@@ -786,6 +821,22 @@ function jmd_img_selector_thickbox($event, $step)
             <select id="jmdImgSel_categories">
                 <option value="root">root</option>
                 {$jmdImgSel->displayCategories()}
+            </select>
+        </label>
+        <label>{$jmdImgSel->gTxt('insert_as')}
+            <select id="jmdImgSel_type">
+                <option value="article_image">
+                    {$jmdImgSel->gTxt('article_image')}
+                </option>
+                <option value="body">
+                    {$jmdImgSel->gTxt('body')}
+                </option>
+                <option value="thumbnail">
+                    {$jmdImgSel->gTxt('thumbnail')}
+                </option>
+                <option value="popup">
+                    {$jmdImgSel->gTxt('popup')}
+                </option>
             </select>
         </label>
     </div>
@@ -930,23 +981,28 @@ IMG;
     {
         $i10n = array(
             'add_img' => 'Add image',
+            'article_image' => 'Article image',
+            'body' => 'Body',
             'browse' => 'Browse category:',
             'create_css' => 'Create CSS',
             'close_window' => 'Close',
             'css_created' => 'CSS created.',
             'css_legend' => 'Create jmd_img_selector CSS',
             'img_legend' => 'Image settings',
+            'insert_as' => 'Insert as:',
             'link_name' => 'Insert Image',
             'no_images' => 'No images were found.',
             'no_tb_css' => 'thickbox.css was not found.',
             'no_tb_js' => 'thickbox.js was not found.',
             'page_title' => 'Image selector',
+            'popup' => 'Popup',
             'pref_width' => 'Width',
             'pref_height' => 'Height',
             'prefs_legend' => 'jmd_img_selector preferences',
             'prefs_updated' => 'Preferences updated.',
             'tb_dir' => 'Path to Thickbox directory',
             'tb_legend' => 'Thickbox settings',
+            'thumbnail' => 'Thumbnail',
             'update' => 'Update',
             'update_msg' => 'Images added.',
         );
