@@ -1,6 +1,6 @@
 <?php
 $plugin = array(
-    'version' => '0.4',
+    'version' => '1.0b1',
     'author' => 'Jon-Michael Deldin',
     'author_uri' => 'http://jmdeldin.com',
     'description' => 'Thickbox-style image selector.',
@@ -13,7 +13,28 @@ if (0) {
 
 # --- BEGIN PLUGIN HELP ---
 
-See Extensions>jmd_img_selector for preferences.
+h1. jmd_img_selector: Thickbox-style image selector
+
+"Forum thread":http://forum.textpattern.com/viewtopic.php?id=27456, "hg repo":http://www.bitbucket.org/jmdeldin/jmd_img_selector/overview/
+
+*Requires:* PHP 5, TXP 4.0.6+
+
+h2. Setup
+
+After installing and activating the plugin, you need to "create a CSS file":index.php?event=jmd_img_selector.
+
+h3. Updating
+
+* Delete jmd_img_selector stylesheet from Presentation>Style
+* Create a new CSS file
+* Clear your browser cache
+
+h2. Browser support
+
+* Firefox 3
+* Internet Explorer 7
+* Opera 9.5
+* Safari 3
 
 # --- END PLUGIN HELP ---
 
@@ -632,6 +653,7 @@ jmdImgSel.init = function()
 
 /**
  * Toggle categories based on select value
+ *
  * @param string val Category to check against.
  */
 jmdImgSel.sortImg = function(val)
