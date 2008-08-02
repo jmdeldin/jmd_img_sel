@@ -268,7 +268,7 @@ var jmdImgSel = {
         'closeText': '{$jmdImgSel->gTxt('close_window')}',
         'contentId': 'jmdImgSel_content',
         'linkName': '{$jmdImgSel->gTxt('link_name')}',
-        'imgNameId': 'jmdImgSel_img_name',
+        'imgNameId': 'jmdImgSel_imgName',
         'overlayId': 'jmdImgSel_overlay',
         'modalId': 'jmdImgSel_modal',
         'selectId': 'jmdImgSel_categories',
@@ -735,22 +735,22 @@ function jmd_img_selector_thickbox($event, $step)
     $lang = LANG;
     $dir = gTxt('lang_dir');
     echo <<<HTML
-<div id="jmdImgSel_close">
-    <a href="#jmdImgSel">
-        {$jmdImgSel->gTxt('close_window')}
-    </a>
-</div>
+<a href="#jmdImgSel" id="jmdImgSel_close">
+    X
+</a>
 <div id="jmdImgSel_controls">
-    <label>{$jmdImgSel->gTxt('browse')}
-        <select id="jmdImgSel_categories">
-            <option value="root">root</option>
-            {$jmdImgSel->displayCategories()}
-        </select>
-    </label>
+    <div id="jmdImgSel_options">
+        <label>{$jmdImgSel->gTxt('browse')}
+            <select id="jmdImgSel_categories">
+                <option value="root">root</option>
+                {$jmdImgSel->displayCategories()}
+            </select>
+        </label>
+    </div>
     <button id="jmdImgSel_add" type="button">
         {$jmdImgSel->gTxt('add_img')}
     </button>
-    <div id="jmdImgSel_img_name">
+    <div id="jmdImgSel_imgName">
         &nbsp;
     </div>
 </div>
