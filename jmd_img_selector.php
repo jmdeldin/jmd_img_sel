@@ -1,6 +1,6 @@
 <?php
 $plugin = array(
-    'version' => '0.3.4',
+    'version' => '0.4',
     'author' => 'Jon-Michael Deldin',
     'author_uri' => 'http://jmdeldin.com',
     'description' => 'Thickbox-style image selector.',
@@ -60,6 +60,7 @@ if (txpinterface === 'admin')
 
 /**
  * jmd_img_selector preferences
+ *
  * @param string $event
  * @param string $step
  */
@@ -252,6 +253,7 @@ CSS;
 
 /**
  * Injects Thickbox CSS and JS links. Also includes prefs-pane CSS.
+ *
  * @param string $buffer
  */
 function jmd_img_selector_head($buffer)
@@ -280,6 +282,7 @@ EOD;
 
 /**
  * Thickbox JS
+ *
  * @param string $event
  * @param string $step
  */
@@ -340,6 +343,7 @@ jmdImgSel.addEvent = function(obj, event, func)
 
 /**
  * Checks if a value is in an array.
+ *
  * @param array haystack
  * @param int needle
  */
@@ -356,6 +360,7 @@ jmdImgSel.inArray = function(haystack, needle)
 
 /**
  * Splice an array when the element's index is unknown
+ *
  * @param array haystack
  * @param int needle
 */
@@ -401,6 +406,7 @@ jmdImgSel.getStyle = function(el, prop)
 
 /**
  * Toggles an element's visibility.
+ *
  * @param obj el
  */
 jmdImgSel.toggle = function(el)
@@ -503,6 +509,7 @@ jmdImgSel.getContents = function()
 
 /**
  * Creates the image selector modal window.
+ *
  * @param string contents
  */
 jmdImgSel.createModal = function(contents)
@@ -522,7 +529,7 @@ jmdImgSel.createModal = function(contents)
 
 /**
  * Positions the modal window.
-*/
+ */
 jmdImgSel.positionModal = function()
 {
     var modal = document.getElementById(jmdImgSel.config.modalId);
@@ -664,6 +671,7 @@ jmdImgSel.selectImg = function(el)
 
 /**
  * Inserts or removes an image name.
+ *
  * @param string name Image name
  */
 jmdImgSel.toggleName = function(name)
@@ -685,6 +693,7 @@ jmdImgSel.toggleName = function(name)
 
 /**
  * Fades an element to white, then removes it.
+ *
  * @param string el
  * @param int red
  * @param int green
@@ -756,6 +765,7 @@ EOD;
 
 /**
  * Thickbox HTML
+ *
  * @param string $event
  * @param string $step
  */
@@ -874,6 +884,7 @@ IMG;
 
     /**
      * fInput() shortcut
+     *
      * @param string $label Key for $textarray
      * @param string $name Input name
      * @param mixed $value Input value
@@ -908,6 +919,7 @@ IMG;
 
     /**
      * Localizable strings
+     *
      * @param string $key
      */
     public function gTxt($key)
@@ -940,6 +952,7 @@ IMG;
 
     /**
      * Shortcut for 'jmd_img_selector'
+     *
      * @param string $suffix Text to append to 'jmd_img_selector'
      * @return string
      */
@@ -956,6 +969,7 @@ IMG;
 
     /**
      * Insert or update a preference.
+     *
      * @param string $name Non-prefixed preference name
      * @param mixed $value
      * @param bool $insert
