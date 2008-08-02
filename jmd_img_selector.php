@@ -340,23 +340,29 @@ jmdImgSel.unkSplice = function(haystack, needle)
 };
 
 /**
- * Returns an element's CSS value.
+ * Returns the value of an element's CSS property.
  *
  * @param string el
- * @param string attr
+ * @param string prop
  */
-jmdImgSel.getStyle = function(el, attr)
+jmdImgSel.getStyle = function(el, prop)
 {
+
     var val;
     if (document.defaultView && document.defaultView.getComputedStyle)
     {
         var el = document.defaultView.getComputedStyle(el, '');
-        val = el.getPropertyValue(attr);
+        val = el.getPropertyValue(prop);
     }
     else
     {
         // IE
-        val = el.currentStyle[attr];
+        var match = prop.match(/-\w/);
+        if (match)
+        {
+            prop = prop.replace(match, match[0].toUpperCase().substr(1, 1));
+        }
+        val = el.currentStyle[prop];
     }
 
     return val;
@@ -435,7 +441,7 @@ jmdImgSel.getExisting = function()
     }
 };
 
-/** TODO: Test in IE
+/**
  * Performs an XMLHttpRequest.
  */
 jmdImgSel.getContents = function()
@@ -501,10 +507,9 @@ jmdImgSel.positionModal = function()
     if (imgContainer)
     {
         var controls = document.getElementById(jmdImgSel.config.controlsId);
-        var controlHeight = parseInt(controls.clientHeight) +
-            parseInt(jmdImgSel.getStyle(controls, 'paddingTop')) +
-            parseInt(jmdImgSel.getStyle(controls, 'paddingBottom'));
-        var ht = (jmdImgSel.config.windowHeight - controlHeight);
+        var ht = jmdImgSel.config.windowHeight -
+            parseInt(jmdImgSel.getStyle(controls, 'margin-bottom')) -
+            controls.clientHeight;
         imgContainer.style.height = ht + 'px';
     }
 };
