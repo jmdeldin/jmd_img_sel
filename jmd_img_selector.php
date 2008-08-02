@@ -129,12 +129,6 @@ function jmd_img_selector($event, $step)
     top: -20px;
 }
 
-#jmdImgSel_msg
-{
-    font-weight: 900;
-    padding: 0 10px;
-}
-
 #jmdImgSel_controls
 {
     background: #eee;
@@ -173,10 +167,21 @@ function jmd_img_selector($event, $step)
         float: left;
     }
 
-#jmdImgSel_imgName
+#jmdImgSel_info
 {
     clear: both;
     color: #333;
+    font-weight: 900;
+}
+
+#jmdImgSel_msg
+{
+    padding: 0 10px;
+}
+
+#jmdImgSel_imgName
+{
+
     font-weight: 900;
 }
 
@@ -302,6 +307,7 @@ var jmdImgSel = {
         'contentId': 'jmdImgSel_content',
         'linkName': '{$jmdImgSel->gTxt('link_name')}',
         'imgNameId': 'jmdImgSel_imgName',
+        'infoId': 'jmdImgSel_info',
         'overlayId': 'jmdImgSel_overlay',
         'modalId': 'jmdImgSel_modal',
         'selectId': 'jmdImgSel_categories',
@@ -701,7 +707,6 @@ jmdImgSel.toggleName = function(name)
  */
 jmdImgSel.fadeUp = function(el, red, green, blue)
 {
-    var modal = document.getElementById(jmdImgSel.config.modalId);
     if (el.fade)
     {
         clearTimeout(el.fade);
@@ -720,7 +725,7 @@ jmdImgSel.fadeUp = function(el, red, green, blue)
     }
     else
     {
-        modal.removeChild(el);
+        el.parentNode.removeChild(el);
         return;
     }
 
@@ -741,20 +746,17 @@ jmdImgSel.addImg = function()
         var msg = document.getElementById(jmdImgSel.config.updateId);
         if (!msg)
         {
-            msg = document.createElement('div');
+            msg = document.createElement('span');
             msg.id = jmdImgSel.config.updateId;
-            var p = document.createElement('p');
-            p.appendChild(
+            msg.appendChild(
                 document.createTextNode(jmdImgSel.config.updateMsg)
             );
-            msg.appendChild(p);
-
-            var content = document.getElementById(jmdImgSel.config.contentId);
-            var modal = document.getElementById(jmdImgSel.config.modalId);
-            modal.insertBefore(msg, modal.firstChild);
+            var info = document.getElementById(jmdImgSel.config.infoId);
+            info.insertBefore(msg, info.firstChild);
         }
-            jmdImgSel.fadeUp(msg, 255, 255, 153);
-            return field.value = jmdImgSel.selected.join();
+        jmdImgSel.fadeUp(msg, 255, 255, 153);
+
+        return field.value = jmdImgSel.selected.join();
     }
 };
 
@@ -790,8 +792,10 @@ function jmd_img_selector_thickbox($event, $step)
     <button id="jmdImgSel_add" type="button">
         {$jmdImgSel->gTxt('add_img')}
     </button>
-    <div id="jmdImgSel_imgName">
-        &nbsp;
+    <div id="jmdImgSel_info">
+        <span id="jmdImgSel_imgName">
+            &nbsp;
+        </span>
     </div>
 </div>
 
