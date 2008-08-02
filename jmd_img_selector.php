@@ -90,13 +90,12 @@ function jmd_img_selector($event, $step)
 {
     background: #000;
     height: 100%;
-    left: 0;
     opacity: 0.8;
-    /*TODO: switch to abs and do pos() w/js - faster for firefox*/
+    /*ie*/
+    filter: alpha(opacity=80);
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1;
 }
 
 #jmdImgSel_modal, #jmdImgSel_modal *
@@ -104,68 +103,87 @@ function jmd_img_selector($event, $step)
     margin: 0;
     padding: 0;
 }
-    #jmdImgSel_modal
-    {
-        background: #fff;
-        color: #333;
-        position: absolute;
-        top: 25px;
-        z-index: 2;
-    }
 
-#jmdImgSel_msg
+#jmdImgSel_modal
 {
+    background: #fff;
     position: absolute;
-    top: -20px;
+    top: 35px;
 }
-    #jmdImgSel_msg p
-    {
-        padding: 2px 5px;
-    }
 
 #jmdImgSel_close
 {
-    background: rgba(0, 0, 0, 0.8);
-    text-align: right;
+    background: #000;
+    border: 3px solid #fff;
+    -moz-border-radius: 1.1em;
+    -webkit-border-radius: 1.1em;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 2px 3px 3px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    left: -20px;
+    padding: 0.25em 0.55em;
+    position: absolute;
+    text-decoration: none;
+    top: -20px;
 }
-    #jmdImgSel_close a
-    {
-        background: #eee;
-        padding: 2px 5px;
-    }
+
+#jmdImgSel_msg
+{
+    font-weight: 900;
+    padding: 0 10px;
+}
 
 #jmdImgSel_controls
 {
     background: #eee;
-    padding: 10px 0;
+    margin: 0 0 8px;
+    padding: 5px 10px 5px;
+    /*ie*/
+    zoom: 1;
 }
-    #jmdImgSel_controls:after {
+    #jmdImgSel_controls:after
+    {
         clear: both;
         content: '.';
         display: block;
         height: 0;
         visibility: hidden;
     }
-    #jmdImgSel_controls label
-    {
-        float: left;
-        margin: 0 0 0 10px;
-    }
     #jmdImgSel_controls button
     {
         float: right;
-        margin: 0 10px 0 0;
+        font-size: 100%;
+        padding: 0 0.5em;
     }
-    #jmdImgSel_img_name
+
+#jmdImgSel_options
+{
+    float: left;
+    width: 85%;
+}
+    /*lazy way of targeting the two labels.*/
+    #jmdImgSel_options label
     {
-/*        clear: both;*/
-        font-weight: 900;
-/*        padding: 0 10px;*/
+        float: right;
     }
+    #jmdImgSel_options label:first-child
+    {
+        float: left;
+    }
+
+#jmdImgSel_imgName
+{
+    clear: both;
+    color: #333;
+    font-weight: 900;
+}
 
 #jmdImgSel_images
 {
+    clear: both;
     overflow: auto;
+    padding: 0 10px;
 }
     #jmdImgSel_images li
     {
@@ -174,7 +192,6 @@ function jmd_img_selector($event, $step)
         margin: 0 5px 10px 0;
         opacity: 0.6;
         overflow: hidden;
-        position: relative;
     }
         #jmdImgSel_images li:hover
         {
@@ -188,8 +205,7 @@ function jmd_img_selector($event, $step)
         }
     #jmdImgSel_images img
     {
-        position: absolute;
-        top: 0;
+        line-height: 0;
     }
 CSS;
         safe_insert("txp_css", "name='jmd_img_selector', css='" . base64_encode($css) . "'");
@@ -243,6 +259,20 @@ function jmd_img_selector_head($buffer)
     $find = '</head>';
     $head = <<<EOD
 <link href="./css.php?n=jmd_img_selector" rel="stylesheet" type="text/css"/>
+<!--[if !IE]><!-->
+<style type="text/css">
+/*Safari - circumvent the cutoff images-bug*/
+#jmdImgSel_images li
+{
+    position: relative;
+}
+#jmdImgSel_images img
+{
+    position: absolute;
+    top: 0;
+}
+</style>
+<!--<![endif]-->
 <script src="./?event=jmd_img_selector_js" type="text/javascript"></script>
 EOD;
     return str_replace($find, $head . $find, $buffer);
