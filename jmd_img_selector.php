@@ -46,16 +46,16 @@ h2. Browser support
 if (txpinterface === 'admin')
 {
     global $event, $jmdImgSel, $prefs;
-    $privs = '1,2,3,4,5';
-    add_privs('jmd_img_selector', $privs);
+    $jmdImgSel_privs = '1,2,3,4,5';
+    add_privs('jmd_img_selector', $jmdImgSel_privs);
     register_tab('extensions', 'jmd_img_selector', 'jmd_img_selector');
     register_callback('jmd_img_selector', 'jmd_img_selector');
-    add_privs('jmd_img_selector_js', $privs);
+    add_privs('jmd_img_selector_js', $jmdImgSel_privs);
     register_callback('jmd_img_selector_js', 'jmd_img_selector_js');
-    add_privs('jmd_img_selector_thickbox', $privs);
+    add_privs('jmd_img_selector_thickbox', $jmdImgSel_privs);
     register_callback('jmd_img_selector_thickbox', 'jmd_img_selector_thickbox');
-    $view = gps('view');
-    if ($event === 'article' && $view !== 'preview' && $view !== 'html')
+    $jmdImgSel_view = gps('view');
+    if ($event === 'article' && $jmdImgSel_view !== 'preview' && $jmdImgSel_view !== 'html')
     {
         ob_start('jmd_img_selector_head');
     }
