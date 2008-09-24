@@ -21,7 +21,7 @@ h1. jmd_img_selector: Thickbox-style image selector
 
 h2. Setup
 
-After installing and activating the plugin, you need to "create a CSS file":index.php?event=jmd_img_selector.
+After installing and activating the plugin, you need to "create a CSS file":?event=jmd_img_selector.
 
 h3. Updating
 
