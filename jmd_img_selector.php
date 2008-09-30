@@ -809,14 +809,12 @@ jmdImgSel.insert = function(content)
  */
 jmdImgSel.addImg = function()
 {
-    var field, out;
     var type = document.getElementById(jmdImgSel.config.typeId);
-    field = document.getElementById(jmdImgSel.config.bodyField);
     switch (type.value)
     {
         case 'article_image':
-            field = document.getElementById(jmdImgSel.config.articleImgField);
-            out = jmdImgSel.selected.join();
+            var field = document.getElementById(jmdImgSel.config.articleImgField);
+            field.value = jmdImgSel.selected.join();
             break;
         case 'body':
             jmdImgSel.insert(jmdImgSel.bodyImg('image', ''));
