@@ -777,6 +777,34 @@ jmdImgSel.bodyImg = function(tagName, attr)
 }
 
 /**
+ * Insert image based on the cursor location. Fallback: Append.
+ *
+ * @param string content Content to be inserted
+ */
+jmdImgSel.insert = function(content)
+{
+    var field = document.getElementById(jmdImgSel.config.bodyField);
+    // IE
+    if (document.selection)
+    {
+        field.focus();
+        document.selection.createRange().text = content;
+    }
+    // Others
+    else if (field.selectionStart || field.selectionStart == 0)
+    {
+        field.value = field.value.substr(0, field.selectionStart) +
+            content + 
+            field.value.substring(field.selectionEnd, field.value.length);
+    }
+    // Append
+    else
+    {
+        field.value += content;
+    }
+};
+
+/**
  * Update the parent window field
  */
 jmdImgSel.addImg = function()
@@ -791,13 +819,13 @@ jmdImgSel.addImg = function()
             out = jmdImgSel.selected.join();
             break;
         case 'body':
-            out = field.value + jmdImgSel.bodyImg('image', '');
+            jmdImgSel.insert(jmdImgSel.bodyImg('image', ''));
             break;
         case 'thumbnail':
-            out = field.value + jmdImgSel.bodyImg('thumbnail', '');
+            jmdImgSel.insert(jmdImgSel.bodyImg('thumbnail', ''));
             break;
         case 'popup':
-            out = field.value + jmdImgSel.bodyImg('thumbnail', ' poplink="1"');
+            jmdImgSel.insert(jmdImgSel.bodyImg('thumbnail', 'poplink="1"'));
             break;
         default:
     }
@@ -813,8 +841,6 @@ jmdImgSel.addImg = function()
         info.insertBefore(msg, info.firstChild);
     }
     jmdImgSel.fadeUp(msg, 255, 255, 153);
-    
-    return field.value = out;
 };
 
 jmdImgSel.addEvent(window, 'load', jmdImgSel.insertLink);
@@ -1076,7 +1102,6 @@ IMG;
         {
             safe_update("txp_prefs", "val='$value'", "name='$name'");
         }
-
     }
 }
 
