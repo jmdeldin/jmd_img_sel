@@ -1,0 +1,126 @@
+#jmdImgSel_overlay
+{
+    background: #000;
+    height: 100%;
+    opacity: 0.8;
+    /*ie*/
+    filter: alpha(opacity=80);
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+#jmdImgSel_modal, #jmdImgSel_modal *
+{
+    margin: 0;
+    padding: 0;
+}
+
+#jmdImgSel_modal
+{
+    background: #fff;
+    position: absolute;
+    top: 35px;
+}
+
+#jmdImgSel_close
+{
+    background: #000;
+    border: 3px solid #fff;
+    -moz-border-radius: 1.1em;
+    -webkit-border-radius: 1.1em;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 2px 3px 3px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    left: -20px;
+    padding: 0.25em 0.55em;
+    position: absolute;
+    text-decoration: none;
+    top: -20px;
+}
+
+#jmdImgSel_controls
+{
+    background: #eee;
+    margin: 0 0 8px;
+    padding: 5px 10px 5px;
+    /*ie*/
+    zoom: 1;
+}
+    #jmdImgSel_controls:after
+    {
+        clear: both;
+        content: '.';
+        display: block;
+        height: 0;
+        visibility: hidden;
+    }
+    #jmdImgSel_controls button
+    {
+        float: right;
+        font-size: 100%;
+        padding: 0 0.5em;
+    }
+
+#jmdImgSel_options
+{
+    float: left;
+    width: 85%;
+}
+    /*lazy way of targeting the two labels.*/
+    #jmdImgSel_options label
+    {
+        float: right;
+    }
+    #jmdImgSel_options label:first-child
+    {
+        float: left;
+    }
+
+#jmdImgSel_info
+{
+    clear: both;
+    color: #333;
+    font-weight: 900;
+}
+
+#jmdImgSel_msg
+{
+    padding: 0 10px;
+}
+
+#jmdImgSel_imgName
+{
+
+    font-weight: 900;
+}
+
+#jmdImgSel_images
+{
+    clear: both;
+    overflow: auto;
+    padding: 0 0 0 10px;
+}
+    #jmdImgSel_images li
+    {
+        border: 5px solid #ccc;
+        float: left;
+        margin: 0 5px 10px 0;
+        opacity: 0.6;
+        overflow: hidden;
+    }
+        #jmdImgSel_images li:hover
+        {
+            border-color: #999;
+            opacity: 1;
+        }
+        #jmdImgSel_images li.selected
+        {
+            border-color: #666;
+            opacity: 1;
+        }
+    #jmdImgSel_images img
+    {
+        line-height: 0;
+    }
