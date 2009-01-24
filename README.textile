@@ -1,6 +1,6 @@
 h1. jmd_img_selector: Thickbox-style image selector
 
-"Forum thread":http://forum.textpattern.com/viewtopic.php?id=27456, "hg repo":http://www.bitbucket.org/jmdeldin/jmd_img_selector/overview/
+"Forum thread":http://forum.textpattern.com/viewtopic.php?id=27456, "git repo":http://github.com/jmdeldin/jmd_img_sel/
 
 *Requires:* PHP 5, TXP 4.0.6+
 
@@ -20,3 +20,4 @@ h2. Browser support
 * Internet Explorer 7
 * Opera 9.5
 * Safari 3
+

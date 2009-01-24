@@ -74,7 +74,7 @@ function jmd_img_selector($event, $step)
     if ($step === 'css')
     {
         $css = <<<CSS
-//inc <imgSel.css>
+//inc <img_sel.css>
 CSS;
         safe_insert("txp_css", "name='jmd_img_selector', css='" . base64_encode($css) . "'");
         $msg = $jmdImgSel->gTxt('css_created');
@@ -184,7 +184,7 @@ var jmdImgSel = {
     }
 };
 
-//inc <imgSel.js>
+//inc <img_sel.js>
 EOD;
     exit;
 }
@@ -402,6 +402,7 @@ IMG;
     /**
      * Shortcut for 'jmd_img_selector'
      *
+     * FIXME: remove this method & replace with 'jmd_img_sel'
      * @param string $suffix Text to append to 'jmd_img_selector'
      * @return string
      */
@@ -429,20 +430,9 @@ IMG;
         $name = $this->prefix($name);
         $prefs[$name] = $value;
         if ($insert === 1)
-        {
-            safe_insert("txp_prefs", "prefs_id=1,
-                name='$name',
-                val='$value',
-                type=2,
-                event='admin',
-                html='text_input',
-                position=0
-            ");
-        }
+            set_pref($name, $value, 'admin', 2);
         else
-        {
-            safe_update("txp_prefs", "val='$value'", "name='$name'");
-        }
+            set_pref($name, $value);
     }
 }
 
