@@ -1,13 +1,13 @@
 <?php
-$plugin = array(
-    'version' => '1.0b2',
-    'author' => 'Jon-Michael Deldin',
-    'author_uri' => 'http://jmdeldin.com',
-    'description' => 'Thickbox-style image selector.',
-    'type' => 1,
-);
-
-# --- BEGIN PLUGIN CODE ---
+/**
+ * @name            jmd_img_selector
+ * @description     Thickbox-style image selector
+ * @author          Jon-Michael Deldin
+ * @author_uri      http://jmdeldin.com
+ * @version         1.0b2
+ * @type            3
+ * @order           5
+ */
 
 if (txpinterface === 'admin')
 {
@@ -25,7 +25,6 @@ if (txpinterface === 'admin')
     {
         ob_start('jmd_img_selector_head');
     }
-
     $jmdImgSel = new JMD_ImgSelector;
     if (empty($prefs[$jmdImgSel->prefix('tbWidth')]))
     {
@@ -435,8 +434,6 @@ IMG;
             set_pref($name, $value);
     }
 }
-
-# --- END PLUGIN CODE ---
 
 ?>
 
